@@ -7,9 +7,10 @@
       :pagination="{
         showTotal: true,
         pageSize: searchParams.pageSize,
-        current: searchParams.pageNum,
+        current: searchParams.current,
         total,
       }"
+      @page-change="onPageChange"
     >
       <template #optional="{ record }">
         <a-space>
@@ -21,8 +22,8 @@
   </div>
 </template>
 
-<script lang="ts" setup>
-import { onMounted, ref } from "vue";
+<script setup lang="ts">
+import { onMounted, ref, watchEffect } from "vue";
 import {
   Page_Question_,
   Question,
@@ -32,14 +33,13 @@ import message from "@arco-design/web-vue/es/message";
 import * as querystring from "querystring";
 import { useRouter } from "vue-router";
 
-const show = ref(true);
 const tableRef = ref();
 
 const dataList = ref([]);
 const total = ref(0);
 const searchParams = ref({
   pageSize: 10,
-  pageNum: 1,
+  current: 1,
 });
 
 const loadData = async () => {
@@ -55,13 +55,18 @@ const loadData = async () => {
 };
 
 /**
- * 页面加载时，请求数据
+ * 监听 searchParams 变量，改变时触发页面的重新加载
  */
-onMounted(() => {
+watchEffect(() => {
   loadData();
 });
 
-// {id: "1", title: "A+ D", content: "新的题目内容", tags: "["二叉树"]", answer: "新的答案", submitNum: 0,…}
+/**
+ * 页面加载时，请求数据
+ */
+onMounted(() => {
+  // loadData();
+});
 
 const columns = [
   {
@@ -113,6 +118,13 @@ const columns = [
     slotName: "optional",
   },
 ];
+
+const onPageChange = (page: number) => {
+  searchParams.value = {
+    ...searchParams.value,
+    current: page,
+  };
+};
 
 const doDelete = async (question: Question) => {
   const res = await QuestControllerService.deleteQuestionUsingPost({

@@ -100,15 +100,15 @@
 <script lang="ts" setup>
 import { onMounted, ref } from "vue";
 import message from "@arco-design/web-vue/es/message";
-import { useRoute } from "vue-router";
+import { onBeforeRouteLeave, useRoute } from "vue-router";
 import { QuestControllerService } from "../../../generated";
 import MdEditor from "@/components/MdEditor.vue";
 
 const route = useRoute();
 // 如果页面地址包含 update，视为更新页面
-const updatePage = route.path.includes("update");
+const updatePage = ref(route.path.includes("update"));
 
-let form = ref({
+const form = ref({
   title: "",
   tags: [],
   answer: "",
@@ -126,12 +126,38 @@ let form = ref({
   ],
 });
 
+onBeforeRouteLeave((to, from, next) => {
+  updatePage.value = to.path.includes("update");
+  if (updatePage.value) {
+    loadData();
+  } else {
+    form.value = {
+      title: "",
+      tags: [],
+      answer: "",
+      content: "",
+      judgeConfig: {
+        memoryLimit: 1000,
+        stackLimit: 1000,
+        timeLimit: 1000,
+      },
+      judgeCase: [
+        {
+          input: "",
+          output: "",
+        },
+      ],
+    };
+    loadData();
+  }
+  next();
+});
 /**
  * 根据题目 id 获取老的数据
  */
 const loadData = async () => {
   const id = route.query.id;
-  if (!id) {
+  if (!updatePage.value) {
     return;
   }
   const res = await QuestControllerService.getQuestionByIdUsingGet(id as any);
@@ -175,7 +201,7 @@ onMounted(() => {
 const doSubmit = async () => {
   console.log(form.value);
   // 区分更新还是创建
-  if (updatePage) {
+  if (updatePage.value) {
     const res = await QuestControllerService.updateQuestionUsingPost(
       form.value
     );

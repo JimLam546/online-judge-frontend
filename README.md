@@ -1,5 +1,11 @@
 # oj-frontend
 
+## 代码生成
+```bash
+openapi --input http://localhost:8080/api/v2/api-docs --output ./generated --client axios
+```
+
+
 ## Project setup
 ```
 npm install

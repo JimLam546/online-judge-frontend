@@ -5,6 +5,7 @@
 import type { BaseResponse_boolean_ } from "../models/BaseResponse_boolean_";
 import type { BaseResponse_long_ } from "../models/BaseResponse_long_";
 import type { BaseResponse_Page_Question_ } from "../models/BaseResponse_Page_Question_";
+import type { BaseResponse_Page_QuestionSubmitVO_ } from "../models/BaseResponse_Page_QuestionSubmitVO_";
 import type { BaseResponse_Page_QuestionVO_ } from "../models/BaseResponse_Page_QuestionVO_";
 import type { BaseResponse_Question_ } from "../models/BaseResponse_Question_";
 import type { BaseResponse_QuestionVO_ } from "../models/BaseResponse_QuestionVO_";
@@ -12,11 +13,12 @@ import type { DeleteRequest } from "../models/DeleteRequest";
 import type { QuestionAddRequest } from "../models/QuestionAddRequest";
 import type { QuestionEditRequest } from "../models/QuestionEditRequest";
 import type { QuestionQueryRequest } from "../models/QuestionQueryRequest";
+import type { QuestionSubmitAddRequest } from "../models/QuestionSubmitAddRequest";
+import type { QuestionSubmitQueryRequest } from "../models/QuestionSubmitQueryRequest";
 import type { QuestionUpdateRequest } from "../models/QuestionUpdateRequest";
 import type { CancelablePromise } from "../core/CancelablePromise";
 import { OpenAPI } from "../core/OpenAPI";
 import { request as __request } from "../core/request";
-
 export class QuestControllerService {
   /**
    * addQuestion
@@ -39,7 +41,6 @@ export class QuestControllerService {
       },
     });
   }
-
   /**
    * deleteQuestion
    * @param deleteRequest deleteRequest
@@ -61,7 +62,6 @@ export class QuestControllerService {
       },
     });
   }
-
   /**
    * editQuestion
    * @param questionEditRequest questionEditRequest
@@ -83,7 +83,6 @@ export class QuestControllerService {
       },
     });
   }
-
   /**
    * getQuestionById
    * @param id id
@@ -106,7 +105,6 @@ export class QuestControllerService {
       },
     });
   }
-
   /**
    * getQuestionVOById
    * @param id id
@@ -129,7 +127,6 @@ export class QuestControllerService {
       },
     });
   }
-
   /**
    * listQuestionByPage
    * @param questionQueryRequest questionQueryRequest
@@ -151,7 +148,6 @@ export class QuestControllerService {
       },
     });
   }
-
   /**
    * listQuestionVOByPage
    * @param questionQueryRequest questionQueryRequest
@@ -173,7 +169,6 @@ export class QuestControllerService {
       },
     });
   }
-
   /**
    * listMyQuestionVOByPage
    * @param questionQueryRequest questionQueryRequest
@@ -195,7 +190,48 @@ export class QuestControllerService {
       },
     });
   }
-
+  /**
+   * doQuestionSubmit
+   * @param questionSubmitAddRequest questionSubmitAddRequest
+   * @returns BaseResponse_long_ OK
+   * @returns any Created
+   * @throws ApiError
+   */
+  public static doQuestionSubmitUsingPost(
+    questionSubmitAddRequest: QuestionSubmitAddRequest
+  ): CancelablePromise<BaseResponse_long_ | any> {
+    return __request(OpenAPI, {
+      method: "POST",
+      url: "/api/Question/question_submit/do",
+      body: questionSubmitAddRequest,
+      errors: {
+        401: `Unauthorized`,
+        403: `Forbidden`,
+        404: `Not Found`,
+      },
+    });
+  }
+  /**
+   * listQuestionSubmitByPage
+   * @param questionSubmitQueryRequest questionSubmitQueryRequest
+   * @returns BaseResponse_Page_QuestionSubmitVO_ OK
+   * @returns any Created
+   * @throws ApiError
+   */
+  public static listQuestionSubmitByPageUsingPost(
+    questionSubmitQueryRequest: QuestionSubmitQueryRequest
+  ): CancelablePromise<BaseResponse_Page_QuestionSubmitVO_ | any> {
+    return __request(OpenAPI, {
+      method: "POST",
+      url: "/api/Question/question_submit/list/page",
+      body: questionSubmitQueryRequest,
+      errors: {
+        401: `Unauthorized`,
+        403: `Forbidden`,
+        404: `Not Found`,
+      },
+    });
+  }
   /**
    * updateQuestion
    * @param questionUpdateRequest questionUpdateRequest

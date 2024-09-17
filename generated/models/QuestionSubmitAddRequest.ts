@@ -2,9 +2,9 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-export type JudgeConfig = {
-    memoryLimit?: number;
-    stackLimit?: number;
-    timeLimit?: number;
+export type QuestionSubmitAddRequest = {
+    code?: string;
+    language?: string;
+    questionId?: number;
 };
 

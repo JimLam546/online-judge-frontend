@@ -20,12 +20,12 @@
         <div style="text-align: center">
           <h2>用户登录</h2>
         </div>
-        <div>
+        <div id="submit_form">
           <a-form
             :model="form"
             :style="{ width: '600px' }"
-            @submit="handleSubmit()"
             style="margin: auto"
+            @submit="handleSubmit()"
           >
             <a-form-item field="userAccount" label="账号" tooltip="请输入账号">
               <a-input v-model="form.userAccount" placeholder="请输入账号" />
@@ -77,4 +77,17 @@ const handleSubmit = async () => {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+#userLoginView {
+  display: flex;
+  height: 100vh;
+  background-image: url("../../assets/images/background.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.content {
+  justify-content: center;
+  align-items: center;
+}
+</style>

@@ -5,11 +5,12 @@ import accessEnum from "@/access/accessEnum";
 import { checkAccess } from "@/access/checkAccess";
 
 router.beforeEach(async (to, from, next) => {
-  const loginUser = store.state.user.loginUser;
+  let loginUser = store.state.user.loginUser;
   // 如果之前没有登录过，自动登录
   if (!loginUser || !loginUser.userRole) {
     // 加 await 是为了等用户登录成功之后，再执行后续的代码
     await store.dispatch("user/getLoginUser"); // 如果用户没有登录，无法在后端获取，getLoginUser 会将 userRole 设置为 NOT_LOGIN
+    loginUser = store.state.user.loginUser;
   }
   // 路由里没有 access 的,就是不需要登录就能访问
   const needAccess = (to.meta?.access as string) ?? ACCESS_ENUM.NOT_LOGIN;
