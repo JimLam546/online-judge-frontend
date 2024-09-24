@@ -1,24 +1,11 @@
-# oj-frontend
+# campus_team-backend
 
-## Project setup
-```
-npm install
-```
+#### 项目介绍
+校园伙伴匹配平台，基于 Vue3 + Spring Boot 2 的移动端网站，实现了用户管理、按标签检索用户、推荐相似用户、组队等功能。
+后端使用 SpringBoot+ MyBatis-Plus + MySQL + Redis 等技术,结合**阿里云OSS**完成图片上传。
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+#### 在线体验
+http://47.115.163.154:5173
+账号可以自行注册，也可以使用以下账号进行体验
+- 账号：123456789
+- 密码：123456789
