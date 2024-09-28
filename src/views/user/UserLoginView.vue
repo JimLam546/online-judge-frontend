@@ -17,32 +17,51 @@
         </a-row>
       </a-layout-header>
       <a-layout-content class="content">
-        <div style="text-align: center">
-          <h2>用户登录</h2>
-        </div>
-        <div id="submit_form">
-          <a-form
-            :model="form"
-            :style="{ width: '600px' }"
-            style="margin: auto"
-            @submit="handleSubmit()"
-          >
-            <a-form-item field="userAccount" label="账号" tooltip="请输入账号">
-              <a-input v-model="form.userAccount" placeholder="请输入账号" />
-            </a-form-item>
-            <a-form-item field="post" label="密码" tooltip="密码长度不小于8位">
-              <a-input-password
-                v-model="form.userPassword"
-                placeholder="请输入密码"
-              />
-            </a-form-item>
-            <a-form-item>
-              <a-button html-type="submit">登录</a-button>
-            </a-form-item>
-          </a-form>
-        </div>
+        <a-card
+          id="formBackground"
+          style="width: 650px; margin: 100px auto; border-radius: 20px"
+        >
+          <div style="text-align: center">
+            <h2>用户登录</h2>
+          </div>
+          <div id="submit_form">
+            <a-form
+              :model="form"
+              :style="{ width: '600px' }"
+              label-align="left"
+              style="margin: auto"
+              @submit="handleSubmit()"
+            >
+              <a-form-item
+                field="userAccount"
+                label="账号"
+                tooltip="请输入账号"
+              >
+                <a-input v-model="form.userAccount" placeholder="请输入账号" />
+              </a-form-item>
+              <a-form-item
+                field="post"
+                label="密码"
+                tooltip="密码长度不小于8位"
+              >
+                <a-input-password
+                  v-model="form.userPassword"
+                  placeholder="请输入密码"
+                />
+              </a-form-item>
+              <a-form-item>
+                <a-button html-type="submit" long type="primary">登录</a-button>
+              </a-form-item>
+              <a-form-item>
+                <a-button long @click="toRegister()"
+                  >没有账号？前往注册
+                </a-button>
+              </a-form-item>
+            </a-form>
+          </div>
+        </a-card>
       </a-layout-content>
-      <a-layout-footer class="footer">Footer</a-layout-footer>
+      <!--<a-layout-footer class="footer">Footer</a-layout-footer>-->
     </a-layout>
   </div>
 </template>
@@ -75,18 +94,20 @@ const handleSubmit = async () => {
     message.error("登录失败，" + res.message);
   }
 };
+const toRegister = () => {
+  router.push("/user/register");
+};
 </script>
 
-<style scoped>
+<style>
 #userLoginView {
-  display: flex;
   height: 100vh;
   background-image: url("../../assets/images/background.png");
   background-repeat: no-repeat;
   background-size: cover;
 }
 
-.content {
+#formBackground {
   justify-content: center;
   align-items: center;
 }

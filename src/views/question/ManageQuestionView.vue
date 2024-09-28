@@ -12,6 +12,18 @@
       }"
       @page-change="onPageChange"
     >
+      <template #tags="{ record }">
+        <!--{{ JSON.parse(JSON.stringify(record.tags))  }}-->
+        <a-tag
+          v-for="tag in JSON.parse(JSON.parse(JSON.stringify(record.tags)))"
+          :key="tag"
+          color="green"
+          >{{ tag }}
+        </a-tag>
+      </template>
+      <template #createTime="{ record }">
+        {{ moment(record.createTime).format("YYYY-MM-DD HH:mm:ss") }}
+      </template>
       <template #optional="{ record }">
         <a-space>
           <a-button type="primary" @click="doUpdate(record)"> 修改</a-button>
@@ -22,16 +34,12 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script lang="ts" setup>
 import { onMounted, ref, watchEffect } from "vue";
-import {
-  Page_Question_,
-  Question,
-  QuestControllerService,
-} from "../../../generated";
+import { QuestControllerService, Question } from "../../../generated";
 import message from "@arco-design/web-vue/es/message";
-import * as querystring from "querystring";
 import { useRouter } from "vue-router";
+import moment from "moment";
 
 const tableRef = ref();
 
@@ -41,6 +49,7 @@ const searchParams = ref({
   pageSize: 10,
   current: 1,
 });
+const tags = ref();
 
 const loadData = async () => {
   const res = await QuestControllerService.listQuestionByPageUsingPost(
@@ -84,6 +93,7 @@ const columns = [
   {
     title: "标签",
     dataIndex: "tags",
+    slotName: "tags",
   },
   {
     title: "答案",
@@ -112,6 +122,7 @@ const columns = [
   {
     title: "创建时间",
     dataIndex: "createTime",
+    slotName: "createTime",
   },
   {
     title: "操作",

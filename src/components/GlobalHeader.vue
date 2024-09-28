@@ -3,38 +3,59 @@
     :wrap="false"
     align="center"
     class="flex-header"
-    style="margin-bottom: 10px"
+    style="margin-bottom: 10px; box-shadow: #eee 0 2px 5px"
   >
     <a-col flex="auto">
-      <div class="menu-demo">
-        <a-menu
-          :selected-keys="selectedKey"
-          mode="horizontal"
-          @menu-item-click="selectMenuItem"
+      <!--<div class="menu-demo">-->
+      <a-menu
+        :selected-keys="selectedKey"
+        mode="horizontal"
+        @menu-item-click="selectMenuItem"
+      >
+        <a-menu-item
+          key="0"
+          :style="{ padding: 0, marginRight: '38px' }"
+          disabled
         >
-          <a-menu-item
-            key="0"
-            :style="{ padding: 0, marginRight: '38px' }"
-            disabled
-          >
-            <div
-              :style="{
-                width: '80px',
-                height: '30px',
-                borderRadius: '2px',
-                background: 'var(--color-fill-3)',
-                cursor: 'text',
-              }"
-            />
-          </a-menu-item>
-          <a-menu-item v-for="item in visibleRoutes" :key="item.path">
-            {{ item.name }}
-          </a-menu-item>
-        </a-menu>
-      </div>
+          <div
+            :style="{
+              width: '80px',
+              height: '30px',
+              borderRadius: '2px',
+              background: 'var(--color-fill-3)',
+              cursor: 'text',
+            }"
+          />
+        </a-menu-item>
+        <a-menu-item v-for="item in visibleRoutes" :key="item.path">
+          {{ item.name }}
+        </a-menu-item>
+      </a-menu>
+      <!--</div>-->
     </a-col>
-    <a-col flex="100px">
-      <div>{{ store.state.user?.loginUser?.userName ?? "没有昵称" }}</div>
+    <a-col flex="150px">
+      <div v-if="store.state.user.loginUser.username">
+        <a-button type="outline" @click="router.push('/user/login')"
+          >登录/注册
+        </a-button>
+      </div>
+      <div v-else>
+        <a-space size="large">
+          <a-dropdown @select="handleSelect">
+            <a-avatar>
+              <img
+                alt="avatar"
+                src="https://ts1.cn.mm.bing.net/th/id/R-C.cca1c5e89045e69f2e1afff85c918a76?rik=7ki43op50DhBJg&riu=http%3a%2f%2fimg.touxiangkong.com%2fuploads%2fallimg%2f2023021310%2fd1m42oq0uku.jpg&ehk=fLZnCF9ueCyt3R0xwSqYTq93ZKg%2fpyOl0R7WagtZCVM%3d&risl=&pid=ImgRaw&r=0"
+              />
+            </a-avatar>
+            <template #content>
+              <a-doption>个人中心</a-doption>
+              <a-doption>退出登录</a-doption>
+            </template>
+          </a-dropdown>
+          <div>{{ store.state.user?.loginUser?.userName ?? "没有昵称" }}</div>
+        </a-space>
+      </div>
     </a-col>
   </a-row>
 </template>
@@ -74,16 +95,37 @@ const selectMenuItem = (key: string) => {
     path: key,
   });
 };
-setTimeout(() => {
-  store.dispatch("user/getLoginUser", {
-    username: "JimLam",
-    userRole: "admin",
-  });
-}, 3000);
+console.log("store.user=", store.state.user.loginUser.username);
+// setTimeout(() => {
+//   store.dispatch("user/getLoginUser", {
+//     username: "JimLam",
+//     userRole: "admin",
+//   });
+// }, 3000);
+
+const handleSelect = (v: any) => {
+  if (v === "退出登录") {
+    router.push("/user/login");
+  }
+};
 </script>
 
 <style scoped>
-.menu-demo {
-  box-shadow: #eee 0 2px 5px;
+/*a-row {*/
+/*  box-shadow: #eee 0 2px 5px;*/
+/*}*/
+
+.arco-space .arco-space-horizontal .arco-space-align-center .arco-space-item {
+  margin-right: 12px;
+}
+
+.title-bar {
+  display: flex;
+  align-items: center;
+}
+
+.title {
+  color: #444;
+  margin-left: 16px;
 }
 </style>

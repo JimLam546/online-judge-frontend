@@ -34,10 +34,45 @@
       @page-change="onPageChange"
     >
       <template #judgeInfo="{ record }">
-        {{ JSON.stringify(record.judgeInfo) }}
+        <a-tag
+          v-if="
+            !record.judgeInfo.message || record.judgeInfo.message.length < 1
+          "
+          bordered
+          class="tags"
+        >
+        </a-tag>
+        <a-tag
+          v-else-if="record.judgeInfo.message === '答案正确'"
+          class="tags"
+          color="green"
+          >答案正确
+        </a-tag>
+        <a-tag v-else class="tags" color="red"
+          >{{ record.judgeInfo.message }}
+        </a-tag>
+        <!--{{ JSON.stringify(record.judgeInfo) }}-->
+        <a-tag class="tags">
+          <template #icon>
+            <icon-schedule />
+          </template>
+          消耗时间: {{ record?.judgeInfo.time }}ms
+        </a-tag>
+        <a-tag class="tags">
+          <template #icon>
+            <icon-bug />
+          </template>
+          消耗内存: {{ record?.judgeInfo.memory }}kb
+        </a-tag>
       </template>
       <template #createTime="{ record }">
         {{ moment(record.createTime).format("YYYY-MM-DD") }}
+      </template>
+      <template #status="{ record }">
+        <a-tag v-if="record.status === 0">待判题</a-tag>
+        <a-tag v-else-if="record.status === 1" loading>判题中</a-tag>
+        <a-tag v-else-if="record.status === 2" color="green">判题成功</a-tag>
+        <a-tag v-else-if="record.status === 3" color="red">判题失败</a-tag>
       </template>
     </a-table>
   </div>
@@ -109,6 +144,7 @@ const columns = [
   {
     title: "判题状态",
     dataIndex: "status",
+    slotName: "status",
   },
   {
     title: "题目 id",
@@ -159,5 +195,9 @@ const doSubmit = () => {
 #questionSubmitView {
   max-width: 1280px;
   margin: 0 auto;
+}
+
+.tags {
+  margin-right: 5px;
 }
 </style>

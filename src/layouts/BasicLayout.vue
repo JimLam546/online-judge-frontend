@@ -7,7 +7,9 @@
       <a-layout-content class="content">
         <router-view />
       </a-layout-content>
-      <a-layout-footer class="footer">Footer</a-layout-footer>
+      <a-layout-footer class="footer"
+        ><a href="" style="text-decoration: none">Online Judge 2024 | JimLam</a>
+      </a-layout-footer>
     </a-layout>
   </div>
 </template>
@@ -23,7 +25,7 @@ export default {
 
 <style scoped>
 #basicLayout .header {
-  background-color: aqua;
+  /*background-color: aqua;*/
 }
 
 #basicLayout .content {
@@ -31,9 +33,9 @@ export default {
 }
 
 #basicLayout .footer {
-  background-color: aquamarine;
+  /*background-color: aquamarine;*/
   position: sticky;
-  bottom: 0;
+  bottom: 3px;
   left: 0;
   right: 0;
   text-align: center;
