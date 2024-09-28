@@ -7,8 +7,11 @@
       <a-layout-content class="content">
         <router-view />
       </a-layout-content>
-      <a-layout-footer class="footer"
-        ><a href="" style="text-decoration: none">Online Judge 2024 | JimLam</a>
+      <a-layout-footer class="footer">
+        <icon-github />
+        <a href="https://github.com/Jimlam546" style="text-decoration: none"
+          >Online Judge 2024 | JimLam</a
+        >
       </a-layout-footer>
     </a-layout>
   </div>

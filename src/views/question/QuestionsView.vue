@@ -25,18 +25,36 @@
       @page-change="onPageChange"
     >
       <template #tags="{ record }">
-        <a-space wrap>
-          <a-tag v-for="(tag, index) of record.tags" :key="index" color="green"
-            >{{ tag }}
-          </a-tag>
+        <a-space v-for="(tag, index) of record.tags" :key="index" wrap>
+          <a-tag v-if="tag === '简单'" color="green">{{ tag }}</a-tag>
+          <a-tag v-else-if="tag === '中等'" color="gold">{{ tag }}</a-tag>
+          <a-tag v-else-if="tag === '困难'" color="red">{{ tag }}</a-tag>
+          <a-tag v-else color="blue">{{ tag }}</a-tag>
         </a-space>
       </template>
       <template #acceptedRate="{ record }">
-        {{
-          `${
-            record.submitNum ? record.acceptedNum / record.submitNum : "0"
-          }% (${record.acceptedNum}/${record.submitNum})`
-        }}
+        <a-space size="medium">
+          <a-progress
+            :percent="
+              record.submitNum ? record.acceptedNum / record.submitNum : 0
+            "
+            :show-text="false"
+            size="medium"
+            status="success"
+            type="circle"
+          />{{
+            record.submitNum
+              ? ((record.acceptedNum * 100) / record.submitNum)
+                  .toString()
+                  .substring(0, 5)
+              : 0
+          }}%
+        </a-space>
+        <!--{{-->
+        <!--  `${-->
+        <!--    record.submitNum ? record.acceptedNum / record.submitNum : "0"-->
+        <!--  }% (${record.acceptedNum}/${record.submitNum})`-->
+        <!--}}-->
       </template>
       <template #createTime="{ record }">
         {{ moment(record.createTime).format("YYYY-MM-DD") }}
@@ -52,16 +70,14 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script lang="ts" setup>
 import { onMounted, ref, watchEffect } from "vue";
 import {
-  Page_Question_,
-  Question,
   QuestControllerService,
+  Question,
   QuestionQueryRequest,
 } from "../../../generated";
 import message from "@arco-design/web-vue/es/message";
-import * as querystring from "querystring";
 import { useRouter } from "vue-router";
 import moment from "moment";
 

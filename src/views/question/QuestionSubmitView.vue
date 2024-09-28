@@ -62,7 +62,7 @@
           <template #icon>
             <icon-bug />
           </template>
-          消耗内存: {{ record?.judgeInfo.memory }}kb
+          消耗内存: {{ record?.judgeInfo.memory }}MB
         </a-tag>
       </template>
       <template #createTime="{ record }">

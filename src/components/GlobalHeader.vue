@@ -17,15 +17,12 @@
           :style="{ padding: 0, marginRight: '38px' }"
           disabled
         >
-          <div
-            :style="{
-              width: '80px',
-              height: '30px',
-              borderRadius: '2px',
-              background: 'var(--color-fill-3)',
-              cursor: 'text',
-            }"
-          />
+          <div class="title-bar">
+            <img class="logo" src="../assets/logo.png" width="38px" />
+            <div class="title">
+              <span style="font-weight: bold">Jim-OJ在线判题平台</span>
+            </div>
+          </div>
         </a-menu-item>
         <a-menu-item v-for="item in visibleRoutes" :key="item.path">
           {{ item.name }}
