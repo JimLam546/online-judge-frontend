@@ -20,7 +20,7 @@
           <div class="title-bar">
             <img class="logo" src="../assets/logo.png" width="38px" />
             <div class="title">
-              <span style="font-weight: bold">Jim-OJ在线判题平台</span>
+              <span style="font-weight: bold">Jim OJ在线判题平台</span>
             </div>
           </div>
         </a-menu-item>
@@ -46,7 +46,7 @@
               />
             </a-avatar>
             <template #content>
-              <a-doption>个人中心</a-doption>
+              <a-doption>注销</a-doption>
               <a-doption>退出登录</a-doption>
             </template>
           </a-dropdown>
@@ -92,7 +92,7 @@ const selectMenuItem = (key: string) => {
     path: key,
   });
 };
-console.log("store.user=", store.state.user.loginUser.username);
+// console.log("store.user=", store.state.user.loginUser.username);
 // setTimeout(() => {
 //   store.dispatch("user/getLoginUser", {
 //     username: "JimLam",
@@ -103,6 +103,8 @@ console.log("store.user=", store.state.user.loginUser.username);
 const handleSelect = (v: any) => {
   if (v === "退出登录") {
     router.push("/user/login");
+  } else if (v === "注销") {
+    store.dispatch("user/logout");
   }
 };
 </script>

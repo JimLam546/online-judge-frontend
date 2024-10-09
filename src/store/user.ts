@@ -2,6 +2,7 @@ import { StoreOptions } from "vuex";
 import AccessEnum from "@/access/accessEnum";
 import { getLoginUser } from "@/service/axiosService";
 import { resType } from "@/models/resultType";
+import { UserControllerService } from "../../generated";
 
 export default {
   namespaced: true,
@@ -22,6 +23,15 @@ export default {
       } else {
         commit("updateUser", {
           ...state.loginUser,
+          userRole: AccessEnum.NOT_LOGIN,
+        });
+      }
+    },
+    async logout({ commit, state }, payload) {
+      const res: resType = await UserControllerService.userLogoutUsingPost();
+      if (res.code === 0) {
+        commit("updateUser", {
+          username: "没有登录",
           userRole: AccessEnum.NOT_LOGIN,
         });
       }

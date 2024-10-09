@@ -74,6 +74,14 @@
         <a-tag v-else-if="record.status === 2" color="green">判题成功</a-tag>
         <a-tag v-else-if="record.status === 3" color="red">判题失败</a-tag>
       </template>
+      <template #userId="{ record }">
+        <span
+          v-if="store.state.user.loginUser.id === record?.userId"
+          style="font-weight: bold; color: blue"
+          >我</span
+        >
+        <span v-else>{{ record?.userId }}</span>
+      </template>
     </a-table>
   </div>
 </template>
@@ -88,6 +96,7 @@ import {
 import message from "@arco-design/web-vue/es/message";
 import { useRouter } from "vue-router";
 import moment from "moment";
+import store from "@/store";
 
 const tableRef = ref();
 
@@ -99,7 +108,6 @@ const searchParams = ref<QuestionSubmitQueryRequest>({
   pageSize: 10,
   current: 1,
 });
-
 const loadData = async () => {
   const res = await QuestControllerService.listQuestionSubmitByPageUsingPost({
     ...searchParams.value,
@@ -153,6 +161,7 @@ const columns = [
   {
     title: "提交者 id",
     dataIndex: "userId",
+    slotName: "userId",
   },
   {
     title: "提交时间",
